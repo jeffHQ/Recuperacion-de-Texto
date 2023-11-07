@@ -8,20 +8,16 @@ def busqueda_postgres(query, k):
     ram = 0
     tiempo = 0
 
-    start_time = time.time() * 1000  # Registra el tiempo de inicio en milisegundos
+    start_time = time.time() * 1000
 
-    # Función para obtener el uso actual de la memoria RAM
     def get_memory_usage():
         process = psutil.Process(os.getpid())
-        return process.memory_info().rss / 1024 / 1024  # En megabytes
+        return process.memory_info().rss / 1024 / 1024  
 
-    # Realiza la conexión
-    conn = psycopg2.connect(host="localhost", database="postgres", user="postgres", password="Magdalena150")
+    conn = psycopg2.connect(host="localhost", database="postgres", user="postgres", password="")
 
-    # Crea un cursor para interactuar con la base de datos
     cur = conn.cursor()
 
-    # Construye la consulta optimizada
     consulta = """
         SELECT
             track_id,
@@ -45,13 +41,10 @@ def busqueda_postgres(query, k):
         ORDER BY similitud DESC LIMIT %s;
     """
 
-    # Ejecuta la consulta
     cur.execute(consulta, (query, query, k))
 
-    # Obtiene los resultados
     resultados = cur.fetchall()
 
-    # Cierra el cursor y la conexión
     cur.close()
     conn.close()
 
@@ -60,8 +53,8 @@ def busqueda_postgres(query, k):
             "ID": row[0]
         })
 
-    end_time = time.time() * 1000  # Registra el tiempo de finalización en milisegundos
-    tiempo = end_time - start_time  # Calcula el tiempo transcurrido en milisegundos
+    end_time = time.time() * 1000 
+    tiempo = end_time - start_time 
     ram = get_memory_usage()
 
     return vector_resultados, ram, tiempo

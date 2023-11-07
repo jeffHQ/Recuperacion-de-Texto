@@ -8,8 +8,7 @@ with open(input_file, 'r', newline='', encoding='utf-8') as input_csv, open(outp
     writer = csv.writer(output_csv)
 
     for row in reader:
-        # Asegúrate de que el formato de fecha sea "YYYY-MM-DD"
-        if len(row[7]) == 4:  # Verifica si el valor es un año (ej. "1981")
+        if len(row[7]) == 4:
             row[7] = f"{row[7]}-01"
 
         writer.writerow(row)
