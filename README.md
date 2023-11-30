@@ -293,14 +293,18 @@ def find_nearest_neighbors_faiss(query_track_id, k):
     return nearest_neighbors
 ````
 
+# Maldicion de la dimensionalidad
 
-## Experimentos
+Un gran problema que se enfrenta es poseer un dataset de alta dimensionalidad dificultando el entendimiento. A esto se le conoce como maldicion de la dimensionalidad. las dimensiones serian representadas por los atributos del dataset si esta dimension es demasiado grande hasta ha la computadora se le puede resultar complicado.
 
-|  | KNN-search  | Rtree | Faiss|
-|--------------|--------------|--------------|--------------|
-| N=1000   |     |     |   |
-| N=2000    |     |     |    |
-| N=4000   |    |     |    |
+Como sabemos no todos los atributos seran importantes y otras solo arbitrarias, por ello, tener tantos atributos genera menor precision en nuestros resultados haciendo que los puntos o variables se encuentran equidistantes, es decir, que la distancia entre los puntos sea la misma y no existan vecinos mas cercnos que otros.
+
+### Mitigación
+
+Para la reduccion de este problema podemos principalmente adquirir datos correctos y necesarios en nuestro dataset, ademas, aplicar la seleccion de vectores caracteristicos que nos permiten solo hacer uso de los atributos mas importantes y que de verdad aporten a nueustra dataset.
+
+Finalmente la alta dimensionalidad no siemppre es un problema, ya que, nos permite que sea mas eficas la busqueda de los KNN mas cercanos.
+
 
 ## Conclusión
 
