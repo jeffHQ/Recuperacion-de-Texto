@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>front</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+</head>
+<body class="bg-light">
+    <div class="container mt-3">
+        <h2 class="text-center mb-3">Buscador musica</h2>
+        <form id="knnForm" >
+            <div class="d-flex">
+                <input type="radio" id="html" name="fav_language" value="knn">
+                <label for="html">knn</label><br>
+                <input type="radio" id="css" name="fav_language" value="pca">
+                <label for="css">pca</label><br>
+                <input type="radio" id="javascript" name="fav_language" value="rtree">
+                <label for="javascript">rtree</label>
+                <input type="text" class="form-control mb-3 mx-3 w-75" name="key" id='key'>
+                <button class="btn btn-primary mx-3 w-25 h-75" type="submit">Enviar</button>
+            </div>
+        </form>
+
+        <div class="card overflow-auto mx-3" style="height: 500px">
+            <div class="card-body">
+                
+            </div>
+        </div>
+    </div>
+
+    <script> 
+        document.getElementById('knnForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Obtener el valor del input
+            // Realizar la solicitud POST a la ruta /knn en Flask
+            const keyValue = document.getElementById('key').value;
+            fetch('/knn', {
+                method: 'POST',
+                body: JSON.stringify({ key: keyValue }),  // Enviar el valor como JSON
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Manipular los datos obtenidos y mostrarlos en el div con id 'results'
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `<p>Resultados:</p>`;
+            for (let i = 0; i < data.length; i++) {
+                resultsDiv.innerHTML += `<p>${data[i]}</p>`;
+            }
+        })
+        .catch(error => console.error('Error al obtener datos:', error));
+    }); 
+
+        
+    </script>
+</body>
+</html>
